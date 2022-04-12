@@ -1,9 +1,10 @@
 const express = require('express')
 const Router = express.Router()
 
-const constroller = require('../controller/serverController')
+const controller = require('../controller/serverController')
 
-Router.route('/').get(constroller.returnUnix)
-Router.route('/:date').get(constroller.returnWithDate)
+Router.route('/').get(controller.returnUnix)
+Router.route('/whoami').get(controller.getIpLangaugeAndSoftware)
+Router.route('/:date').get(controller.returnWithDate)
 
 module.exports = Router

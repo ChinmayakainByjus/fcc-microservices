@@ -3,6 +3,6 @@ const Router = express.Router()
 
 const constroller = require('../controller/serverController')
 
-Router.route('/').get(constroller.getAllDetails)
+Router.route('/all').get(constroller.getAllDetails)
 
 module.exports = Router

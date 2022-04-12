@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
     res.send("Welcom to FCC Microservices")
 })
 
-app.use("/api/all", Router)
+app.use("/api", Router)
 
 const start = () => {
     try {

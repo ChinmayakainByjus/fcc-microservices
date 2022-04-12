@@ -1,6 +1,5 @@
 const returnUnix = (req, res) => {
     let inputDate = new Date()
-    inputDate.setMinutes(inputDate.getMinutes() - 3);
 
     return res.json({
         'unix': inputDate.getTime(),

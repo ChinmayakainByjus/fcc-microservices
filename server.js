@@ -7,9 +7,10 @@ const Router = require('./routes/router')
 const HOST = '0.0.0.0';
 const PORT = process.env.PORT || 3000
 
-app.use(express.json())
 const cors = require('cors');
 app.use(cors({ optionsSuccessStatus: 200 }));
+
+app.use(express.json())
 
 app.get("/", (req, res) => {
     res.send("Welcom to FCC Microservices")

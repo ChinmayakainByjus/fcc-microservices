@@ -3,7 +3,7 @@ const Router = express.Router()
 
 const constroller = require('../controller/serverController')
 
-Router.route('/timestamp').get(constroller.returnUnix)
-Router.route('/timestamp/:date').get(constroller.returnWithDate)
+Router.route('/').get(constroller.returnUnix)
+Router.route('/:date').get(constroller.returnWithDate)
 
 module.exports = Router

@@ -1,3 +1,5 @@
+const requestIp = require('request-ip')
+
 const returnUnix = (req, res) => {
     let inputDate = new Date()
 
@@ -28,7 +30,19 @@ const returnWithDate = (req, res) => {
     return res.json(newDate)
 }
 
+const getIpLangaugeAndSoftware = (req, res) => {
+    const clientIp = requestIp.getClientIp(req)
+    const clientLang = req.acceptsLanguages()
+    const clientSoftware = req.get('user-agent')
+    return res.json({
+        ipaddress: clientIp,
+        language: clientLang[0],
+        software: clientSoftware,
+    })
+}
+
 module.exports = {
     returnUnix,
-    returnWithDate
+    returnWithDate,
+    getIpLangaugeAndSoftware
 }

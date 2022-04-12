@@ -15,7 +15,7 @@ app.use("/api", Router)
 
 const start = () => {
     try {
-        app.listen(PORT, console.log(`server is listening on port ${PORT}...`))
+        app.listen(PORT || 3000, console.log(`server is listening on port ${PORT}...`))
     } catch (error) {
         console.log(error)
     }

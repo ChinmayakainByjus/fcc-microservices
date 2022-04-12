@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+require('dotenv').config()
 
 const Router = require('./routes/router')
 
-const PORT = 3000
+const HOST = '0.0.0.0';
+const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
@@ -15,7 +17,7 @@ app.use("/api", Router)
 
 const start = () => {
     try {
-        app.listen(PORT || 3000, console.log(`server is listening on port ${PORT}...`))
+        app.listen(PORT, HOST, console.log(`server is listening on port ${PORT}...`))
     } catch (error) {
         console.error(error)
     }

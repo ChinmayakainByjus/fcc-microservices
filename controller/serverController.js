@@ -41,8 +41,15 @@ const getIpLangaugeAndSoftware = (req, res) => {
     })
 }
 
+const getUrl = (req, res) => {
+    return res.json({
+        original_url: "www.url.com"
+    })
+}
+
 module.exports = {
     returnUnix,
     returnWithDate,
-    getIpLangaugeAndSoftware
+    getIpLangaugeAndSoftware,
+    getUrl
 }

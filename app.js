@@ -3,6 +3,7 @@
 var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+require('dotenv').config()
 
 var cors = require('cors');
 
@@ -37,7 +38,7 @@ app.listen(port, function () {
 });
 
 /* Database Connection */
-let uri = 'mongodb+srv://user1:' + process.env.PW + '@freecodecamp.b0myq.mongodb.net/db1?retryWrites=true&w=majority'
+let uri = process.env.MONGO_URI
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 let urlSchema = new mongoose.Schema({

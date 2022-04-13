@@ -1,7 +1,8 @@
+'use strict';
+
 var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-require('dotenv').config()
 
 var cors = require('cors');
 
@@ -13,8 +14,7 @@ var port = process.env.PORT || 3000;
 /** this project needs a db !! **/
 // mongoose.connect(process.env.DB_URI);
 
-
-app.use(cors({ optionsSuccessStatus: 200 }));
+app.use(cors());
 
 /** this project needs to parse POST bodies **/
 // you should mount the body-parser here
@@ -22,7 +22,7 @@ app.use(cors({ optionsSuccessStatus: 200 }));
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.get('/', function (req, res) {
-    res.send('Hello Earthlings!');
+    res.sendFile(process.cwd() + '/views/index.html');
 });
 
 
@@ -37,8 +37,8 @@ app.listen(port, function () {
 });
 
 /* Database Connection */
-// let uri = 'mongodb+srv://user1:' + process.env.PW + '@freecodecamp.b0myq.mongodb.net/db1?retryWrites=true&w=majority'
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+let uri = 'mongodb+srv://user1:' + process.env.PW + '@freecodecamp.b0myq.mongodb.net/db1?retryWrites=true&w=majority'
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 let urlSchema = new mongoose.Schema({
     original: { type: String, required: true },
@@ -49,7 +49,7 @@ let Url = mongoose.model('Url', urlSchema)
 
 let bodyParser = require('body-parser')
 let responseObject = {}
-app.post('/api/shorturl', bodyParser.urlencoded({ extended: false }), (request, response) => {
+app.post('/api/shorturl/new', bodyParser.urlencoded({ extended: false }), (request, response) => {
     let inputUrl = request.body['url']
 
     let urlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)
@@ -66,7 +66,7 @@ app.post('/api/shorturl', bodyParser.urlencoded({ extended: false }), (request, 
     Url.findOne({})
         .sort({ short: 'desc' })
         .exec((error, result) => {
-            if (!error && result !== undefined) {
+            if (!error && result != undefined) {
                 inputShort = result.short + 1
             }
             if (!error) {
@@ -90,10 +90,13 @@ app.get('/api/shorturl/:input', (request, response) => {
     let input = request.params.input
 
     Url.findOne({ short: input }, (error, result) => {
-        if (!error && result !== undefined) {
+        if (!error && result != undefined) {
             response.redirect(result.original)
         } else {
             response.json('URL not Found')
         }
     })
 })
+
+
+

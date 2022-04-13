@@ -46,7 +46,7 @@ const getIpLangaugeAndSoftware = (req, res) => {
 const getNewUrl = (req, res) => {
     const clientUrl = req.body.url
     const suffix = shortid.generate();
-    const generatedShortUrl = suffix;
+    // const generatedShortUrl = suffix;
 
     const newUrl = new ShortUrl({
         short_url: __dirname + '/api/shorturl/' + suffix,

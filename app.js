@@ -50,7 +50,7 @@ let Url = mongoose.model('Url', urlSchema)
 
 let bodyParser = require('body-parser')
 let responseObject = {}
-app.post('/api/shorturl', bodyParser.urlencoded({ extended: false }), (request, response) => {
+app.post('/api/shorturl/', bodyParser.urlencoded({ extended: false }), (request, response) => {
     let inputUrl = request.body['url']
 
     let urlRegex = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi)

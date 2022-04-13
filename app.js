@@ -111,15 +111,12 @@ app.post("/api/users", (req, res) => {
         _id: mongooseGenerateID
     });
 
-    exerciseUser.save((err, doc) => {
-        if (err) return console.error(err);
-
-        res.json({
-            "saved": true,
-            "username": exerciseUser.username,
-            "_id": exerciseUser["_id"]
-        });
+    res.json({
+        "saved": true,
+        "username": exerciseUser.username,
+        "_id": exerciseUser["_id"]
     });
+
 });
 
 app.get("/api/users", (req, res) => {

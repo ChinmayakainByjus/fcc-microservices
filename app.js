@@ -104,7 +104,7 @@ var ExerciseUser = mongoose.model('ExerciseUser', new mongoose.Schema({
     username: { type: String, unique: true }
 }));
 
-app.post("/api/exercise/new-user/", (req, res) => {
+app.post("/api/users", (req, res) => {
     let mongooseGenerateID = mongoose.Types.ObjectId();
     let exerciseUser = new ExerciseUser({
         username: req.body.username,
@@ -122,7 +122,7 @@ app.post("/api/exercise/new-user/", (req, res) => {
     });
 });
 
-app.get("/api/exercise/users", (req, res) => {
+app.get("/api/users", (req, res) => {
     ExerciseUser.find({}, (err, exerciseUsers) => {
         res.json(exerciseUsers);
     });

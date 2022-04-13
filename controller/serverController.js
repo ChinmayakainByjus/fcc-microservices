@@ -43,7 +43,7 @@ const getIpLangaugeAndSoftware = (req, res) => {
 
 const getUrl = (req, res) => {
     return res.json({
-        url: ""
+        original_url: "www.url.com"
     })
 }
 

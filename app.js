@@ -99,5 +99,34 @@ app.get('/api/shorturl/:input', (request, response) => {
     })
 })
 
+var ExerciseUser = mongoose.model('ExerciseUser', new mongoose.Schema({
+    _id: String,
+    username: { type: String, unique: true }
+}));
+
+app.post("/api/exercise/new-user/", (req, res) => {
+    let mongooseGenerateID = mongoose.Types.ObjectId();
+    let exerciseUser = new ExerciseUser({
+        username: req.body.username,
+        _id: mongooseGenerateID
+    });
+
+    exerciseUser.save((err, doc) => {
+        if (err) return console.error(err);
+
+        res.json({
+            "saved": true,
+            "username": exerciseUser.username,
+            "_id": exerciseUser["_id"]
+        });
+    });
+});
+
+app.get("/api/exercise/users", (req, res) => {
+    ExerciseUser.find({}, (err, exerciseUsers) => {
+        res.json(exerciseUsers);
+    });
+});
+
 
 

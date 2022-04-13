@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config()
+const bodyParser = require('body-parser')
 
 const connectDb = require('./db/connectDb')
 const Router = require('./routes/router')
@@ -10,8 +11,9 @@ const PORT = process.env.PORT || 3000
 
 const cors = require('cors');
 app.use(cors({ optionsSuccessStatus: 200 }));
-
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.get("/", (req, res) => {
     res.send("Welcom to FCC Microservices")

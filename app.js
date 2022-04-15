@@ -113,37 +113,37 @@ const ExerciseUser = mongoose.model('ExerciseUser', new mongoose.Schema({
 ));
 
 
-app.post('/api/users', async (req, res) => {
-    try {
-        const mongooseGenerateID = mongoose.Types.ObjectId();
-        const payload = req.body;
-        const data = { ...payload, _id: mongooseGenerateID }
-        const newUser = await ExerciseUser.create(data)
-        res.json({
-            username: newUser.username,
-            id: newUser._id
-        })
-    } catch (error) {
-        console.log(error)
-    }
+// app.post('/api/users', async (req, res) => {
+//     try {
+//         const mongooseGenerateID = mongoose.Types.ObjectId();
+//         const payload = req.body;
+//         const data = { ...payload, _id: mongooseGenerateID }
+//         const newUser = await ExerciseUser.create(data)
+//         res.json({
+//             username: newUser.username,
+//             id: newUser._id
+//         })
+//     } catch (error) {
+//         console.log(error)
+//     }
 
-})
+// })
 
 
-// app.post("/api/users", (req, res) => {
-//     let mongooseGenerateID = mongoose.Types.ObjectId();
-//     let exerciseUser = new ExerciseUser({
-//         username: req.body.username,
-//         _id: mongooseGenerateID
-//     });
+app.post("/api/users", (req, res) => {
+    let mongooseGenerateID = mongoose.Types.ObjectId();
+    let exerciseUser = new ExerciseUser({
+        username: req.body.username,
+        _id: mongooseGenerateID
+    });
 
-//     res.json({
-//         "saved": true,
-//         "username": exerciseUser.username,
-//         "_id": exerciseUser["_id"]
-//     });
+    res.json({
+        "saved": true,
+        "username": exerciseUser.username,
+        "_id": exerciseUser["_id"]
+    });
 
-// });
+});
 
 app.get("/api/users", (req, res) => {
     ExerciseUser.find({}, (err, exerciseUsers) => {

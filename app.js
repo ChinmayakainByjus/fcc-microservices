@@ -104,7 +104,6 @@ const ExerciseUser = mongoose.model('ExerciseUser', new mongoose.Schema({
     _id: String,
     username: {
         type: String,
-        unique: true,
     },
     description: { type: String },
     duration: { type: Number },

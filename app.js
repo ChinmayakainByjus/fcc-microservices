@@ -100,53 +100,43 @@ app.get('/api/shorturl/:input', (request, response) => {
     })
 })
 
-const ExerciseUser = mongoose.model('ExerciseUser', new mongoose.Schema({
-    _id: String,
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
+        required: true
     },
-    description: { type: String },
-    duration: { type: Number },
-    date: { type: String }
-}
-));
+    exercise: [{
+        description: String,
+        duration: Number,
+        date: String,
+    }]
+});
+const User = mongoose.model('User', userSchema);
 
 
-app.post('/api/users', async (req, res) => {
-    try {
-        const mongooseGenerateID = mongoose.Types.ObjectId();
-        const payload = req.body;
-        const data = { ...payload, _id: mongooseGenerateID }
-        const newUser = await ExerciseUser.create(data)
-        res.json({
-            username: newUser.username,
-            id: newUser._id
-        })
-    } catch (error) {
-        console.log(error)
+//URI handling
+app.post('/api/users', function (req, res) {
+    if (req.body.username != undefined) {
+        let username = req.body.username;
+        let user = new User({ username });
+        user.save(function (err, data) {
+            if (err) res.json({ error: "Mongo error" })
+            else {
+                const { username, _id } = data;
+                res.json({ username, _id });
+            }
+        });
+    } else {
+        res.json({ error: "invalid data" })
     }
+});
 
-})
-
-
-// app.post("/api/users", (req, res) => {
-//     let mongooseGenerateID = mongoose.Types.ObjectId();
-//     let exerciseUser = new ExerciseUser({
-//         username: req.body.username,
-//         _id: mongooseGenerateID
-//     });
-
-//     res.json({
-//         "saved": true,
-//         "username": exerciseUser.username,
-//         "_id": exerciseUser["_id"]
-//     });
-
-// });
-
-app.get("/api/users", (req, res) => {
-    ExerciseUser.find({}, (err, exerciseUsers) => {
-        res.json(exerciseUsers);
+app.get('/api/users', function (req, res) {
+    User.find({}, { username: 1 }).exec(function (err, data) {
+        if (err) res.json({ error: "Mongo error" })
+        else {
+            res.json(data);
+        }
     });
 });
 

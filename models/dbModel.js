@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 
 const ShortUrl = mongoose.model('ShortUrl', new mongoose.Schema({
-    short_url: String,
-    original_url: String,
-    suffix: String
+    original_url: {
+        type: String,
+        required: true
+    },
+    short_url: Number
 }))
 
+
 module.exports = {
-    ShortUrl
+    ShortUrl,
 }

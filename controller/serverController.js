@@ -44,25 +44,36 @@ const getIpLangaugeAndSoftware = (req, res) => {
 }
 
 const getNewUrl = (req, res) => {
-    const clientUrl = req.body.url
-    const suffix = shortid.generate();
+    const clientUrl = req.body['url']
+    responseObject['original_url'] = clientUrl
+
+    let inputShort = 1;
+
+    Url.findOne({}).sort({ sort: 'desc' }).exec((error, result) => {
+        if (!error && result != undefined) {
+
+        }
+    })
+
+    res.json(responseObject)
+    // const suffix = shortid.generate();
     // const generatedShortUrl = suffix;
 
-    const newUrl = new ShortUrl({
-        short_url: __dirname + '/api/shorturl/' + suffix,
-        original_url: clientUrl,
-        suffix: suffix
-    })
+    // const newUrl = new ShortUrl({
+    //     short_url: __dirname + '/api/shorturl/' + suffix,
+    //     original_url: clientUrl,
+    //     suffix: suffix
+    // })
 
-    newUrl.save((error, doc) => {
-        if (error) console.log(error)
-        res.json({
-            "saved": true,
-            "short_url": newUrl.short_url,
-            "original_url": newUrl.original_url,
-            "suffix": newUrl.suffix
-        })
-    })
+    // newUrl.save((error, doc) => {
+    //     if (error) console.log(error)
+    //     res.json({
+    //         "saved": true,
+    //         "short_url": newUrl.short_url,
+    //         "original_url": newUrl.original_url,
+    //         "suffix": newUrl.suffix
+    //     })
+    // })
 }
 
 const getUrl = (req, res) => {

@@ -116,9 +116,9 @@ const User = mongoose.model('User', userSchema);
 
 //URI handling
 app.post('/api/users', function (req, res) {
-    if (req.body.username != undefined) {
         let username = req.body.username;
         let user = new User({ username });
+    try {
         user.save(function (err, data) {
             if (err) res.json({ error: "Mongo error" })
             else {
@@ -126,7 +126,7 @@ app.post('/api/users', function (req, res) {
                 res.json({ username, _id });
             }
         });
-    } else {
+    } catch (error) {
         res.json({ error: "invalid data" })
     }
 });

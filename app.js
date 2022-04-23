@@ -118,8 +118,8 @@ const User = mongoose.model('User', userSchema);
 
 //URI handling
 app.post('/api/users', function (req, res) {
-        let username = req.body.username;
-        let user = new User({ username });
+    let username = req.body.username;
+    let user = new User({ username });
     try {
         user.save(function (err, data) {
             if (err) res.json({ error: "Mongo error" })
@@ -141,6 +141,36 @@ app.get('/api/users', function (req, res) {
         }
     });
 });
+
+app.post('/api/users/:_id/exercises', function (req, res) {
+    const id = req.params.id
+    const { description, duration, date } = req.body
+    User.findById(id, (err, userData) => {
+        if (err) res.send("could not find any data")
+        else {
+            const newExercises = new exercise({
+                userId: id,
+                description,
+                duration,
+                date: new Date(date),
+            })
+            newExercises.save((err, data) => {
+                if (err) res.send("could not find any data")
+                else {
+                    const { description, duration, date } = data
+                    res.json({
+                        username: userData.username,
+                        description,
+                        duration,
+                        date: date.toDateString(),
+                        _id: userData.id
+                    })
+                }
+            })
+        }
+
+    })
+})
 
 // adding to test heroku issue
 

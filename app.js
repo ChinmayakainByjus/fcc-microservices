@@ -5,6 +5,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 require('dotenv').config()
 
+let bodyParser = require('body-parser')
 var cors = require('cors');
 
 var app = express();
@@ -15,6 +16,8 @@ var port = process.env.PORT || 3000;
 /** this project needs a db !! **/
 // mongoose.connect(process.env.DB_URI);
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json())
 
@@ -49,7 +52,6 @@ let urlSchema = new mongoose.Schema({
 
 let Url = mongoose.model('Url', urlSchema)
 
-let bodyParser = require('body-parser')
 let responseObject = {}
 app.post('/api/shorturl', bodyParser.urlencoded({ extended: false }), (request, response) => {
     let inputUrl = request.body['url']

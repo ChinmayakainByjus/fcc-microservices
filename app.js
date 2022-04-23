@@ -16,10 +16,11 @@ var port = process.env.PORT || 3000;
 /** this project needs a db !! **/
 // mongoose.connect(process.env.DB_URI);
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
+
 app.use(cors());
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 /** this project needs to parse POST bodies **/
 // you should mount the body-parser here
